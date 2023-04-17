@@ -14,6 +14,7 @@ func GenerateToken(id uint, email string, role string) string {
 	claims := jwt.MapClaims{
 		"id":    id,
 		"email": email,
+		"role":  role,
 	}
 
 	parsetoken := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
