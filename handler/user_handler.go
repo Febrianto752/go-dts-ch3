@@ -57,9 +57,9 @@ func (h *userHandler) UserRegisterHandler(ctx *gin.Context) {
 	}
 
 	helper.SuccessResponse(ctx, http.StatusCreated, gin.H{
-		"id":       newUser.Id,
-		"email":    newUser.Email,
-		"username": newUser.FullName,
+		"id":        newUser.Id,
+		"email":     newUser.Email,
+		"full_name": newUser.FullName,
 	})
 }
 
