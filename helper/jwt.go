@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GenerateToken(id uint, email string) string {
+func GenerateToken(id uint, email string, role string) string {
 	claims := jwt.MapClaims{
 		"id":    id,
 		"email": email,
