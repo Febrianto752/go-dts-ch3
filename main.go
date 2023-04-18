@@ -23,7 +23,11 @@ func main() {
 	userService := service.NewUserService(userRepository)
 	userHandler := handler.NewUserHandler(userService)
 
-	router := route.NewRouter(userHandler)
+	productRepository := repository.NewProductRepository(db)
+	productService := service.NewProductService(productRepository)
+	productHandler := handler.NewProductHandler(productService)
+
+	router := route.NewRouter(userHandler, productHandler)
 
 	router.Run(":8080")
 }

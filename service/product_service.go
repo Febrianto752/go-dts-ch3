@@ -6,7 +6,7 @@ import (
 )
 
 type ProductService interface {
-	Create(payload entity.ProductRequest, userId uint) (entity.Product, error)
+	Create(payload entity.ProductRequest) (entity.Product, error)
 	GetAll() ([]entity.Product, error)
 	GetById(id uint) (entity.Product, error)
 	Update(payload entity.ProductRequest, id uint, userId uint) (entity.Product, error)
@@ -17,11 +17,12 @@ type productService struct {
 	productRepository repository.ProductRepository
 }
 
-func (s *productService) Create(payload entity.ProductRequest, userId uint) (entity.Product, error) {
+func (s *productService) Create(payload entity.ProductRequest) (entity.Product, error) {
+
 	product := entity.Product{
 		Title:       payload.Title,
 		Description: payload.Description,
-		UserId:      userId,
+		UserId:      payload.UserId,
 	}
 
 	newProduct, err := s.productRepository.Create(product)

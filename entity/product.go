@@ -20,7 +20,7 @@ type Product struct {
 type ProductRequest struct {
 	Title       string `json:"title"`
 	Description string `json:"description"`
-	UserId      string `json:"user_id"`
+	UserId      uint   `json:"user_id"`
 }
 
 func (p *Product) BeforeCreate(tx *gorm.DB) (err error) {

@@ -12,6 +12,13 @@ import (
 
 func ProductAuthorization() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		userData := c.MustGet("userData").(jwt.MapClaims)
+
+		if userData["role"] == "admin" {
+			c.Next()
+			return
+		}
+
 		db := config.InitializeDB()
 
 		productId, err := strconv.Atoi(c.Param("id"))
@@ -21,11 +28,6 @@ func ProductAuthorization() gin.HandlerFunc {
 				"message": "Invalid Parameter",
 			})
 			return
-		}
-		userData := c.MustGet("userData").(jwt.MapClaims)
-
-		if userData["role"] == "admin" {
-			c.Next()
 		}
 
 		userID := uint(userData["id"].(float64))
@@ -48,6 +50,22 @@ func ProductAuthorization() gin.HandlerFunc {
 			return
 		}
 		c.Next()
+
+	}
+}
+func ProductsAuthorization() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		userData := c.MustGet("userData").(jwt.MapClaims)
+
+		if userData["role"] == "admin" {
+			c.Next()
+		} else {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error":   "Unauthorized",
+				"message": "You are not allowed to access this data",
+			})
+			return
+		}
 
 	}
 }

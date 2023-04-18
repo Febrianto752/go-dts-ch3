@@ -60,6 +60,7 @@ func (h *userHandler) UserRegisterHandler(ctx *gin.Context) {
 		"id":        newUser.Id,
 		"email":     newUser.Email,
 		"full_name": newUser.FullName,
+		"role":      newUser.Role,
 	})
 }
 
