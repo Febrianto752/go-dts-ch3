@@ -14,7 +14,7 @@ type User struct {
 	Email     string    `gorm:"not null;uniqueIndex" json:"email" valid:"required~Your email is required, email~Invalid email format"`
 	Password  string    `gorm:"not null" json:"password" valid:"required~Your password is required,minstringlength(6)~Password has to have a minimum length of 6 characters"`
 	Products  []Product `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;" json:"products"`
-	Role      string    `gorm:"type:enum('admin','user')" json:"role"`
+	Role      string    `sql:"type:ENUM('admin', 'user')" gorm:"column:role" json:"role"`
 	CreatedAt *time.Time
 	UpdatedAt *time.Time
 }

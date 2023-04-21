@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/Febrianto752/go-dts-ch3/entity"
 	"github.com/stretchr/testify/mock"
@@ -13,10 +13,9 @@ type ProductRepositoryMock struct {
 
 func (repository *ProductRepositoryMock) FindById(id uint) (entity.Product, error) {
 	arguments := repository.Mock.Called(id)
-	fmt.Println(arguments)
-
+	
 	if arguments.Get(0) == nil {
-		return entity.Product{}, nil
+		return entity.Product{}, errors.New("Product not found")
 	}
 
 	product := arguments.Get(0).(entity.Product)
@@ -25,9 +24,16 @@ func (repository *ProductRepositoryMock) FindById(id uint) (entity.Product, erro
 }
 
 func (repository *ProductRepositoryMock) FindAll() ([]entity.Product, error) {
+	arguments := repository.Mock.Called()
+	
+	if arguments.Get(0) == nil {
+		return []entity.Product{}, errors.New("Products not found")
+	}
 
-	return []entity.Product{}, nil
+	products := arguments.Get(0).([]entity.Product)
+	return products, nil
 }
+
 func (repository *ProductRepositoryMock) Create(product entity.Product) (entity.Product, error) {
 
 	return entity.Product{}, nil
