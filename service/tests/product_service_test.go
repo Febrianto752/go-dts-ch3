@@ -41,13 +41,10 @@ func TestProductServiceGetOneProductNotFound(t *testing.T) {
 
 	result, err := productService.GetById(uint(2))
 
-	// assert.Nil(t, err)
-
 	assert.NotNil(t, err)
 
 	assert.Equal(t, product, result, "result is empty object product")
 	assert.Equal(t, err, errorMessage, "error message must be 'Product not found'")
-	// assert.Equal(t, product, result, "result has to be a product data with id '1'")
 }
 
 func TestProductServiceGetAllProductFound(t *testing.T) {
@@ -69,28 +66,21 @@ func TestProductServiceGetAllProductFound(t *testing.T) {
 	productRepository.Mock.On("FindAll").Return(products)
 
 	result, err := productService.GetAll()
-
 	assert.Nil(t, err)
-
 	assert.NotNil(t, result)
-
 	assert.Equal(t, products, result, "result is products")
 }
+
 func TestProductServiceGetAllProductNotFound(t *testing.T) {
 	var productRepository = &repository.ProductRepositoryMock{Mock: mock.Mock{}}
 	var productService = service.NewProductService(productRepository)
 	
 	products := []entity.Product{
 	}
-
 	errorMessage := errors.New("Products not found")
-	
 	productRepository.Mock.On("FindAll").Return(nil)
-
 	result, err := productService.GetAll()
-
 	assert.NotNil(t, err)
-
 	assert.Equal(t, products, result, "result is empty array of object product")
 	assert.Equal(t, err, errorMessage, "error message must be 'Products not found'")
 }
